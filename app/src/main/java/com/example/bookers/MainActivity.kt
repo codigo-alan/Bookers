@@ -12,5 +12,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Ad fragment to activity
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragmentContainerView, ListFragment())
+            setReorderingAllowed(true)
+            addToBackStack("listFragment") // name can be null
+            commit()
+        }
+
+
     }
 }
