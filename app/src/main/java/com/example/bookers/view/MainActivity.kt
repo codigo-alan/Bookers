@@ -1,7 +1,8 @@
-package com.example.bookers
+package com.example.bookers.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.bookers.R
 import com.example.bookers.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

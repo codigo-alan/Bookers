@@ -1,4 +1,4 @@
-package com.example.bookers
+package com.example.bookers.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

@@ -1,4 +1,4 @@
-package com.example.bookers
+package com.example.bookers.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
