@@ -1,22 +1,23 @@
-package com.example.bookers.view
+package com.example.bookers.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.bookers.databinding.FragmentListBinding
+import com.example.bookers.databinding.FragmentListFavouritesBinding
 
-class ListFragment : Fragment() {
 
-    lateinit var binding: FragmentListBinding
+class ListFavouritesFragment : Fragment() {
+
+    lateinit var binding: FragmentListFavouritesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentListBinding.inflate(inflater,container, false)
+        binding = FragmentListFavouritesBinding.inflate(inflater,container, false)
         return binding.root
     }
 
@@ -24,6 +25,4 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //TODO here like an activity
     }
-
-
 }
