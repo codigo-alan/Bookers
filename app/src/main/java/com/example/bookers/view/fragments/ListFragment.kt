@@ -21,8 +21,8 @@ class ListFragment : Fragment(), OnClickListener {
 
     private lateinit var bookAdapter: BookAdapter
     private lateinit var linearLayoutManager: RecyclerView.LayoutManager
-    private lateinit var binding: FragmentListBinding
     private val model: BookersViewModel by activityViewModels()
+    private lateinit var binding: FragmentListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +35,7 @@ class ListFragment : Fragment(), OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
-
+        model.setFragment(this)
         bookAdapter = BookAdapter(model.bookList.value!!, this) //pass param list of books and listener
         linearLayoutManager = LinearLayoutManager(context)
         //.findFirstVisibleItemPosition() to get the position of the scroll, save it in viewModel
