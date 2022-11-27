@@ -65,5 +65,6 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
     //Top Bar
     implementation 'com.google.android.material:material:1.8.0-alpha01'
+    //implementation 'com.google.android.material:material:1.7.0'
     //implementation("com.google.android.material:material:1.8.0-alpha01")
 }
