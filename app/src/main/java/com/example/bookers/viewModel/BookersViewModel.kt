@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bookers.models.Book
-import com.example.bookers.view.fragments.ListFragment
 
 class BookersViewModel : ViewModel() {
     var bookList = MutableLiveData<MutableList<Book>>().apply {
@@ -28,13 +27,13 @@ class BookersViewModel : ViewModel() {
         )
     }
 
-    var actualFragment = MutableLiveData<Fragment>().apply {
-        this.value = ListFragment()
+    var actualFragment = MutableLiveData<String>().apply {
+        this.value = "listFragment"
     }
     var selectedBook = MutableLiveData<Book>()
 
-    fun setFragment(fragment: Fragment) { //TODO ??
-        actualFragment.postValue(fragment)
+    fun setFragment(fragmentName: String) { //TODO ??
+        actualFragment.postValue(fragmentName)
     }
 
     fun select(book: Book) {

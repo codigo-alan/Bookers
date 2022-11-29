@@ -34,7 +34,7 @@ class ListFavouritesFragment : Fragment(), OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
-        model.setFragment(this)
+        model.setFragment("listFavouritesFragment")
         bookAdapter = BookAdapter(model.bookListFavourites.value!!, this)
         myLayoutManager = GridLayoutManager(context, 3) //3 columns
 
