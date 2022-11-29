@@ -2,6 +2,8 @@ package com.example.bookers.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.example.bookers.R
@@ -11,7 +13,7 @@ import com.example.bookers.view.fragments.ListFavouritesFragment
 import com.example.bookers.view.fragments.ListFragment
 import com.example.bookers.viewModel.BookersViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity()  {
 
     lateinit var binding: ActivityMainBinding
     private val model: BookersViewModel by viewModels()
@@ -21,20 +23,41 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Ad fragment to activity
-        val fragmentToPlace = when (model.actualFragment.value!!) {
-            "listFragment" -> ListFragment()
-            "detailFragment" -> DetailFragment()
-            "listFavouritesFragment" -> ListFavouritesFragment()
-            else -> ListFragment()
-        }
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragmentContainerView, fragmentToPlace)
-            setReorderingAllowed(true)
-            addToBackStack("listFragment") // name can be null
-            commit()
+        //Manage clicks on tool bar
+        binding.materialToolbar!!.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.favorite -> {
+                    model.setFragment("listFavouritesFragment")
+                    println(model.actualFragment.value)
+                    true
+                }
+                else -> {
+                    Toast.makeText(this, "nothing",Toast.LENGTH_SHORT).show()
+                    true
+                }
+            }
         }
 
 
+        //TODO NOT WORKS, give runtime error
+        model.actualFragment.observe(this) {
+            //Ad fragment to activity
+            var fragmentToPlace = when (model.actualFragment.value!!) {
+                "listFragment" -> ListFragment()
+                "detailFragment" -> DetailFragment()
+                "listFavouritesFragment" -> ListFavouritesFragment()
+                else -> ListFragment()
+            }
+
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.fragmentContainerView, fragmentToPlace)
+                setReorderingAllowed(true)
+                addToBackStack("listFragment") // name can be null
+                commit()
+            }
+        }
     }
+
+
 }
+
