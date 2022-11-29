@@ -28,7 +28,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model.setFragment(this)
+        model.setFragment("detailFragment")
         binding.bookTitleTv.text = model.selectedBook.value!!.title
         binding.bookDescriptionTv.text = model.selectedBook.value!!.description
         Glide.with(this)

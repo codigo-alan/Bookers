@@ -35,7 +35,7 @@ class ListFragment : Fragment(), OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
-        model.setFragment(this)
+        model.setFragment("listFragment")
         bookAdapter = BookAdapter(model.bookList.value!!, this) //pass param list of books and listener
         linearLayoutManager = LinearLayoutManager(context)
         //.findFirstVisibleItemPosition() to get the position of the scroll, save it in viewModel
