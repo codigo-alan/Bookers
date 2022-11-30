@@ -23,38 +23,49 @@ class MainActivity : AppCompatActivity()  {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //TODO eliminar navigationIcon, o crearlo cuando haga falta e implementarlo
+
+        //TODO mejorar agregado de fragment según string de viewModel
+
+        val fragmentToPlace = when (model.actualFragment.value!!) {
+            "listFragment" -> ListFragment()
+            "detailFragment" -> DetailFragment()
+            "listFavouritesFragment" -> ListFavouritesFragment()
+            else -> ListFragment()
+        }
+        addFragment(fragmentToPlace)
+
         //Manage clicks on tool bar
         binding.materialToolbar!!.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.favorite -> {
-                    model.setFragment("listFavouritesFragment")
-                    println(model.actualFragment.value)
+                    //model.setFragment("listFavouritesFragment")
+                    addFragment(ListFavouritesFragment())
+                    true
+                }
+                R.id.home -> {
+                    addFragment(ListFragment())
+                    true
+                }
+                R.id.search -> {
+                    //TODO implementar ítem de búsqueda
                     true
                 }
                 else -> {
                     Toast.makeText(this, "nothing",Toast.LENGTH_SHORT).show()
-                    true
+                    false
                 }
             }
         }
+    }
 
-
-        //TODO NOT WORKS, give runtime error
-        model.actualFragment.observe(this) {
-            //Ad fragment to activity
-            var fragmentToPlace = when (model.actualFragment.value!!) {
-                "listFragment" -> ListFragment()
-                "detailFragment" -> DetailFragment()
-                "listFavouritesFragment" -> ListFavouritesFragment()
-                else -> ListFragment()
-            }
-
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.fragmentContainerView, fragmentToPlace)
-                setReorderingAllowed(true)
-                addToBackStack("listFragment") // name can be null
-                commit()
-            }
+    //Add fragment to activity
+    fun addFragment(fragmentToPlace: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragmentContainerView, fragmentToPlace)
+            setReorderingAllowed(true)
+            addToBackStack("listFragment") // name can be null
+            commit()
         }
     }
 
