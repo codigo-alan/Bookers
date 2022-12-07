@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookers.R
 import com.example.bookers.databinding.FragmentListFavouritesBinding
-import com.example.bookers.models.Book
 import com.example.bookers.models.BookAdapter
 import com.example.bookers.models.OnClickListener
+import com.example.bookers.models.gsonModels.Item
 import com.example.bookers.viewModel.BookersViewModel
 
 
@@ -36,9 +35,8 @@ class ListFavouritesFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
         model.setFragment("listFavouritesFragment")
-        bookAdapter = BookAdapter(model.bookListFavourites.value!!, this)
-        myLayoutManager = LinearLayoutManager(context) //2 columns
-
+        bookAdapter = BookAdapter(model.dataFav.value!!, this)
+        myLayoutManager = LinearLayoutManager(context)
         binding.recyclerListFavouritesBooks.apply {
             setHasFixedSize(true)
             layoutManager = myLayoutManager
@@ -46,9 +44,8 @@ class ListFavouritesFragment : Fragment(), OnClickListener {
         }
     }
 
-    override fun onClick(book: Book) {
+    override fun onClick(book: Item) {
         model.select(book)
-
         //navigate to detail fragment
         parentFragmentManager.beginTransaction().apply {
             replace(R.id.fragmentContainerView, DetailFragment())
