@@ -29,10 +29,10 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         model.setFragment("detailFragment")
-        binding.bookTitleTv.text = model.selectedBook.value!!.title
-        binding.bookDescriptionTv.text = model.selectedBook.value!!.description
+        binding.bookTitleTv.text = model.selectedBook.value!!.volumeInfo.title
+        binding.bookDescriptionTv.text = model.selectedBook.value!!.volumeInfo.description
         Glide.with(this)
-            .load(model.selectedBook.value!!.image)
+            .load(model.selectedBook.value!!.volumeInfo.imageLinks.smallThumbnail)
             .diskCacheStrategy(DiskCacheStrategy.ALL) //save in cache to avoid unneeded resources consume
             .centerCrop()
             .circleCrop()

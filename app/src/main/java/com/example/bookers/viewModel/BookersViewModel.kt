@@ -1,11 +1,15 @@
 package com.example.bookers.viewModel
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.bookers.Repository
 import com.example.bookers.models.Book
+import com.example.bookers.models.gsonModels.Data
+import com.example.bookers.models.gsonModels.Item
 
 class BookersViewModel : ViewModel() {
+    private val repository = Repository()
+    var data = MutableLiveData<Data?>()
     var bookList = MutableLiveData<MutableList<Book>>().apply {
         this.value = mutableListOf<Book>(
             Book(1, "Book uno", "Description uno", "https://3.bp.blogspot.com/-2j0WLiDI6v8/WENaCfPuYnI/AAAAAAAHdHY/G_19kwoqRTAJV0yjZgNBrwGpKBZOyLPPQCLcB/s1600/harry-potter-free-printable-invitations-049.jpg"),
@@ -33,16 +37,24 @@ class BookersViewModel : ViewModel() {
         )
     }
 
+    init {
+        fetchData()
+    }
+
+    private fun fetchData(){
+        data = repository.fetchData()
+    }
+
     var actualFragment = MutableLiveData<String>().apply {
         this.value = "listFragment"
     }
-    var selectedBook = MutableLiveData<Book>()
+    var selectedBook = MutableLiveData<Item?>()
 
-    fun setFragment(fragmentName: String) { //TODO ??
+    fun setFragment(fragmentName: String) {
         actualFragment.postValue(fragmentName)
     }
 
-    fun select(book: Book) {
+    fun select(book: Item) {
         selectedBook.postValue(book)
     }
 }

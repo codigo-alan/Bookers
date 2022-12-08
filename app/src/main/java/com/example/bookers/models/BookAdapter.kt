@@ -9,15 +9,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.bookers.R
 import com.example.bookers.databinding.ItemBookBinding
+import com.example.bookers.models.gsonModels.Item
 
 
-class BookAdapter(private val books: List<Book>, private val listener: OnClickListener): RecyclerView.Adapter<BookAdapter.ViewHolder>() {
+class BookAdapter(private val books: List<Item>, private val listener: OnClickListener): RecyclerView.Adapter<BookAdapter.ViewHolder>() {
 
     private lateinit var context: Context
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val binding = ItemBookBinding.bind(view)
-        fun setListener(book: Book){
+        fun setListener(book: Item){
             binding.root.setOnClickListener {
                 listener.onClick(book)
             }
@@ -34,9 +35,9 @@ class BookAdapter(private val books: List<Book>, private val listener: OnClickLi
         val book = books[position]
         with(holder){
             setListener(book)
-            binding.bookTitleTv.text = book.title
+            binding.bookTitleTv.text = book.volumeInfo.title
             Glide.with(context)
-                .load(book.image)
+                .load(book.volumeInfo.imageLinks.smallThumbnail)
                 .diskCacheStrategy(DiskCacheStrategy.ALL) //save in cache to avoid unneeded resources consume
                 .centerCrop()
                 .circleCrop()
