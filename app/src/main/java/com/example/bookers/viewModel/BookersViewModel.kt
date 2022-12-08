@@ -10,14 +10,16 @@ import java.util.logging.Handler
 
 class BookersViewModel : ViewModel() {
     val repository = Repository()
+    var search = MutableLiveData<String>()
     var data = MutableLiveData<List<Item>>().apply { value = listOf() }
     var dataFav = MutableLiveData<List<Item>>().apply { value = listOf() } //This will be got from Room db
 
     init {
-        fetchData("volumes?q=argentina")
+        search.value = "argentina"
+        fetchData("volumes?q=" + search.value!!)
     }
 
-    private fun fetchData(url: String){
+    fun fetchData(url: String){
         repository.fetchData(url)
         android.os.Handler().postDelayed({ //This will be with coroutines
             data.postValue(repository.dataInfo.value)
@@ -36,5 +38,8 @@ class BookersViewModel : ViewModel() {
 
     fun select(book: Item) {
         selectedBook.postValue(book)
+    }
+    fun setSearchString(newSearch: String) {
+        search.postValue(newSearch)
     }
 }

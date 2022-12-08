@@ -2,6 +2,7 @@ package com.example.bookers.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity()  {
         binding.materialToolbar!!.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.favorite -> {
-                    //model.setFragment("listFavouritesFragment")
                     addFragment(ListFavouritesFragment())
                     true
                 }
@@ -48,7 +48,9 @@ class MainActivity : AppCompatActivity()  {
                     true
                 }
                 R.id.search -> {
-                    //TODO implementar ítem de búsqueda
+                    model.setSearchString("vikingos")
+                    model.fetchData("volumes?q=" + model.search.value!!)
+                    Log.d("newSearch", model.search.value!!)
                     true
                 }
                 else -> {
