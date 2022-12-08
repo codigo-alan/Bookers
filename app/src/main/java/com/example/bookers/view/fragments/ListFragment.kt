@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,8 +36,17 @@ class ListFragment : Fragment(), OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
+
         model.setFragment("listFragment")
         bookAdapter = BookAdapter(model.data.value!!, this) //first empty. Pass param list of books and listener
+
+        //Filter bar
+        binding.etFilter!!.addTextChangedListener { userFilter ->
+            val booksFiltered = model.data.value!!.filter { book ->
+                book.volumeInfo.title.lowercase().contains(userFilter.toString().lowercase()) }
+            bookAdapter.setBooks(booksFiltered)
+        }
+
         model.data.observe(viewLifecycleOwner){
             bookAdapter.setBooks(it) //at a change in data execute this line
         }

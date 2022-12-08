@@ -3,9 +3,13 @@ package com.example.bookers.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.example.bookers.R
 import com.example.bookers.databinding.ActivityMainBinding
@@ -47,16 +51,7 @@ class MainActivity : AppCompatActivity()  {
                     addFragment(ListFragment())
                     true
                 }
-                R.id.search -> {
-                    model.setSearchString("vikingos")
-                    model.fetchData("volumes?q=" + model.search.value!!)
-                    Log.d("newSearch", model.search.value!!)
-                    true
-                }
-                else -> {
-                    Toast.makeText(this, "nothing",Toast.LENGTH_SHORT).show()
-                    false
-                }
+                else -> false
             }
         }
     }

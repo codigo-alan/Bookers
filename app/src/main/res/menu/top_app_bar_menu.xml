@@ -14,11 +14,11 @@
         android:title="Favourites"
         app:showAsAction="ifRoom" />
 
-    <item
+    <!--<item
         android:id="@+id/search"
         android:icon="@android:drawable/ic_menu_search"
         android:title="Search"
         app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />-->
 
 </menu>
