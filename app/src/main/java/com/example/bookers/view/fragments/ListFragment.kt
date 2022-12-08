@@ -1,6 +1,7 @@
 package com.example.bookers.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,6 @@ import com.example.bookers.R
 import com.example.bookers.databinding.FragmentListBinding
 import com.example.bookers.models.BookAdapter
 import com.example.bookers.models.OnClickListener
-import com.example.bookers.models.gsonModels.Data
 import com.example.bookers.models.gsonModels.Item
 import com.example.bookers.viewModel.BookersViewModel
 
@@ -36,24 +36,18 @@ class ListFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
         model.setFragment("listFragment")
-        model.data.value?.let {
-            setUpRecyclerView(it)
+        bookAdapter = BookAdapter(model.data.value!!, this) //first empty. Pass param list of books and listener
+        model.data.observe(viewLifecycleOwner){
+            bookAdapter.setBooks(it) //at a change in data execute this line
         }
-
-
-    }
-
-    fun setUpRecyclerView(data: Data) {
-        bookAdapter = BookAdapter(data.items, this) //pass param list of books and listener
         linearLayoutManager = LinearLayoutManager(context)
         //.findFirstVisibleItemPosition() to get the position of the scroll, save it in viewModel
-        //linearLayoutManager = GridLayoutManager(context, 3) //3 columns
-
         binding.recyclerListBooks.apply {
             setHasFixedSize(true) //Optimize app rendiment
             layoutManager = linearLayoutManager
             adapter = bookAdapter
         }
+
     }
 
     override fun onClick(book: Item) {

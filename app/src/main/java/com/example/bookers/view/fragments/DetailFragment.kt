@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.bookers.databinding.FragmentDetailBinding
 import com.example.bookers.viewModel.BookersViewModel
+import com.squareup.picasso.Picasso
 
 
 class DetailFragment : Fragment() {
@@ -31,12 +32,18 @@ class DetailFragment : Fragment() {
         model.setFragment("detailFragment")
         binding.bookTitleTv.text = model.selectedBook.value!!.volumeInfo.title
         binding.bookDescriptionTv.text = model.selectedBook.value!!.volumeInfo.description
-        Glide.with(this)
-            .load(model.selectedBook.value!!.volumeInfo.imageLinks.smallThumbnail)
+        val link = model.selectedBook.value!!.volumeInfo.imageLinks.smallThumbnail
+        /*Glide.with(this)
+            .load(model.selectedBook.value!!.volumeInfo.imageLinks.thumbnail)
             .diskCacheStrategy(DiskCacheStrategy.ALL) //save in cache to avoid unneeded resources consume
             .centerCrop()
             .circleCrop()
-            .into(binding.bookImageIv) //put the image in te image view
+            .into(binding.bookImageIv) //put the image in te image view*/
+        Picasso.get()
+            .load(link)
+            .resize(50, 50)
+            .centerCrop()
+            .into(binding.bookImageIv)
     }
 
 }

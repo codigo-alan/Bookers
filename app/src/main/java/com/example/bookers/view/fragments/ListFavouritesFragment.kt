@@ -12,7 +12,6 @@ import com.example.bookers.R
 import com.example.bookers.databinding.FragmentListFavouritesBinding
 import com.example.bookers.models.BookAdapter
 import com.example.bookers.models.OnClickListener
-import com.example.bookers.models.gsonModels.Data
 import com.example.bookers.models.gsonModels.Item
 import com.example.bookers.viewModel.BookersViewModel
 
@@ -36,19 +35,10 @@ class ListFavouritesFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
         model.setFragment("listFavouritesFragment")
-        model.data.value?.let {
-            setUpRecyclerView(it)
-        }
-    }
-
-    fun setUpRecyclerView(data: Data) {
-        bookAdapter = BookAdapter(data.items, this) //pass param list of books and listener
+        bookAdapter = BookAdapter(model.dataFav.value!!, this)
         myLayoutManager = LinearLayoutManager(context)
-        //.findFirstVisibleItemPosition() to get the position of the scroll, save it in viewModel
-        //myLayoutManager = GridLayoutManager(context, 3) //3 columns
-
         binding.recyclerListFavouritesBooks.apply {
-            setHasFixedSize(true) //Optimize app rendiment
+            setHasFixedSize(true)
             layoutManager = myLayoutManager
             adapter = bookAdapter
         }
@@ -56,7 +46,6 @@ class ListFavouritesFragment : Fragment(), OnClickListener {
 
     override fun onClick(book: Item) {
         model.select(book)
-
         //navigate to detail fragment
         parentFragmentManager.beginTransaction().apply {
             replace(R.id.fragmentContainerView, DetailFragment())

@@ -11,10 +11,11 @@ import retrofit2.http.Url
 interface ApiInterface {
 
     @GET()
-    fun getData(): Call<Data>
+    fun getData(@Url url: String): Call<Data>
 
     companion object {
-        val BASE_URL = "https://www.googleapis.com/books/v1/volumes?q=argentina/"
+        val BASE_URL = "https://www.googleapis.com/books/v1/"
+
         fun create(): ApiInterface {
             val client = OkHttpClient.Builder().build()
             val retrofit = Retrofit.Builder()
@@ -22,6 +23,7 @@ interface ApiInterface {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
+
             return retrofit.create(ApiInterface::class.java)
         }
     }

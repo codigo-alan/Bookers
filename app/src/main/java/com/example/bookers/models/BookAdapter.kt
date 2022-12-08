@@ -12,12 +12,14 @@ import com.example.bookers.databinding.ItemBookBinding
 import com.example.bookers.models.gsonModels.Item
 
 
-class BookAdapter(private val books: List<Item>, private val listener: OnClickListener): RecyclerView.Adapter<BookAdapter.ViewHolder>() {
+class BookAdapter(private var books: List<Item>, private val listener: OnClickListener): RecyclerView.Adapter<BookAdapter.ViewHolder>() {
 
     private lateinit var context: Context
+    var ivHeartCLicked = true
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val binding = ItemBookBinding.bind(view)
+
         fun setListener(book: Item){
             binding.root.setOnClickListener {
                 listener.onClick(book)
@@ -35,15 +37,28 @@ class BookAdapter(private val books: List<Item>, private val listener: OnClickLi
         val book = books[position]
         with(holder){
             setListener(book)
+            verifyFavorite(binding)
             binding.bookTitleTv.text = book.volumeInfo.title
             Glide.with(context)
-                .load(book.volumeInfo.imageLinks.smallThumbnail)
+                .load(book.volumeInfo.imageLinks.thumbnail)
                 .diskCacheStrategy(DiskCacheStrategy.ALL) //save in cache to avoid unneeded resources consume
                 .centerCrop()
                 .circleCrop()
                 .into(binding.bookImageIv) //put the image in te image view
+
         }
 
+    }
+
+    private fun verifyFavorite(binding: ItemBookBinding) {
+        binding.ivHeart.setOnClickListener { ivHeartCLicked = !ivHeartCLicked }
+        if (ivHeartCLicked) binding.ivHeart.setImageResource(R.drawable.filled_blue_heart)
+        else binding.ivHeart.setImageResource(R.drawable.empty_heart)
+    }
+
+    fun setBooks(newListBooks: List<Item>) {
+        books = newListBooks
+        notifyDataSetChanged() //it`s like a refresh
     }
 
     override fun getItemCount(): Int {
