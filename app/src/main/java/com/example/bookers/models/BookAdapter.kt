@@ -49,8 +49,8 @@ class BookAdapter(private var books: List<Item>, private val listener: OnClickLi
     }
 
     private fun verifyFavorite(book: Item, binding: ItemBookBinding) {
-        if (book.isFavorite) binding.ivHeart.setImageResource(R.drawable.filled_blue_heart)
-        else binding.ivHeart.setImageResource(R.drawable.empty_heart)
+        if (book.isFavorite) binding.ivHeart.setImageResource(R.drawable.ic_favorite_item_24)
+        else binding.ivHeart.setImageResource(R.drawable.ic_favorite_border_24)
         binding.ivHeart.setOnClickListener {
             book.isFavorite = !book.isFavorite
             Log.d("fav","${book.isFavorite}")

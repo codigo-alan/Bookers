@@ -1,15 +1,15 @@
 package com.example.bookers.view
 
+import android.app.SearchManager
+import android.content.Context
+import android.content.Context.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.widget.addTextChangedListener
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import com.example.bookers.R
 import com.example.bookers.databinding.ActivityMainBinding
@@ -18,7 +18,7 @@ import com.example.bookers.view.fragments.ListFavouritesFragment
 import com.example.bookers.view.fragments.ListFragment
 import com.example.bookers.viewModel.BookersViewModel
 
-class MainActivity : AppCompatActivity()  {
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener  {
 
     lateinit var binding: ActivityMainBinding
     private val model: BookersViewModel by viewModels()
@@ -51,10 +51,23 @@ class MainActivity : AppCompatActivity()  {
                     addFragment(ListFragment())
                     true
                 }
+                R.id.search -> {
+                    val searchView = it.actionView as SearchView
+                    searchView.setOnQueryTextListener(this)
+                    true
+                }
                 else -> false
             }
         }
     }
+
+    /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_app_bar_menu, menu)
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+        return true
+    }*/
+
 
     //Add fragment to activity
     fun addFragment(fragmentToPlace: Fragment) {
@@ -64,6 +77,18 @@ class MainActivity : AppCompatActivity()  {
             addToBackStack("listFragment") // name can be null
             commit()
         }
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        model.setSearchString(query!!)
+        model.fetchData(model.search.value!!)
+        Log.d("search", model.search.value!!)
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        Log.d("search", model.search.value!!)
+        return false
     }
 
 
