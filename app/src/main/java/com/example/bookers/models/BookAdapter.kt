@@ -39,8 +39,9 @@ class BookAdapter(private var books: List<Item>, private val listener: OnClickLi
             setListener(book)
             verifyFavorite(book, binding)
             binding.bookTitleTv.text = book.volumeInfo.title
+            //val image: String = book.volumeInfo.imageLinks.smallThumbnail ?: "not linked"
             Glide.with(context)
-                .load(book.volumeInfo.imageLinks.thumbnail)
+                .load("todo")
                 .diskCacheStrategy(DiskCacheStrategy.ALL) //save in cache to avoid unneeded resources consume
                 .centerCrop()
                 .circleCrop()
