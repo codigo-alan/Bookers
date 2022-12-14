@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class BookersViewModel : ViewModel() {
-    val repository = Repository()
+    private val repository = Repository()
     var search = MutableLiveData<String>()
     var data = MutableLiveData<List<Item>>().apply { value = listOf() }
     var dataFav = MutableLiveData<List<Item>>().apply { value = listOf() } //This will be got from Room db

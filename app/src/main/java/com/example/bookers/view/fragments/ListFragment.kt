@@ -8,6 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
+
+
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookers.R
@@ -63,12 +68,12 @@ class ListFragment : Fragment(), OnClickListener {
     override fun onClick(book: Item) {
         model.select(book) //change the selected book in the view model
         //change the fragment contained in the activity
-        parentFragmentManager.beginTransaction().apply {
+        /*parentFragmentManager.beginTransaction().apply {
             replace(R.id.fragmentContainerView, DetailFragment())
             setReorderingAllowed(true)
             addToBackStack(null)
             commit()
-        }
-
+        }*/
+        findNavController().navigate(R.id.action_listFragment_to_detailFragment)
     }
 }
