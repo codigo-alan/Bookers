@@ -15,18 +15,16 @@ class Repository {
     private val apiInterface = ApiInterface.create()
     var dataInfo = MutableLiveData<List<Item>>()
 
-    fun fetchData(url: String) {
-        val call = apiInterface.getData(url)
-        call.enqueue(object: Callback<Data> {
-            override fun onFailure(call: Call<Data>, t: Throwable) {
-                Log.e("ERROR", t.message.toString())
-                dataInfo.postValue(listOf())
-            }
-            override fun onResponse(call: Call<Data?>, response: Response<Data?>) {
-                if (response != null && response.isSuccessful) {
-                    dataInfo.value = response.body()!!.items
-                }
-            }
-        })
+    suspend fun fetchData(url: String): Data? {
+        val response = apiInterface.getData(url)
+        if(response.isSuccessful) {
+            dataInfo.postValue(response.body()!!.items)
+            return response.body()!!
+        }
+        else{
+            dataInfo.postValue(listOf())
+            return null
+        }
     }
+
 }

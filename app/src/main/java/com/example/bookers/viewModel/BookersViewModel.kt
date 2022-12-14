@@ -2,11 +2,12 @@ package com.example.bookers.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.bookers.models.Book
+import androidx.lifecycle.viewModelScope
 import com.example.bookers.models.Repository
-import com.example.bookers.models.gsonModels.Data
 import com.example.bookers.models.gsonModels.Item
-import java.util.logging.Handler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BookersViewModel : ViewModel() {
     val repository = Repository()
@@ -20,10 +21,14 @@ class BookersViewModel : ViewModel() {
     }
 
     fun fetchData(url: String){
-        repository.fetchData(url)
-        android.os.Handler().postDelayed({ //This will be with coroutines
+
+        viewModelScope.launch {
+            val dates = withContext(Dispatchers.IO) { repository.fetchData(url) }
+            //data.postValue(dates!!.items) //TODO view null case
             data.postValue(repository.dataInfo.value)
-        }, 1000)
+        }
+
+
     }
 
 
