@@ -15,16 +15,10 @@ class Repository {
     private val apiInterface = ApiInterface.create()
     var dataInfo = MutableLiveData<List<Item>>()
 
-    suspend fun fetchData(url: String): Data? {
+    suspend fun fetchData(url: String) {
         val response = apiInterface.getData(url)
-        if(response.isSuccessful) {
-            dataInfo.postValue(response.body()!!.items)
-            return response.body()!!
-        }
-        else{
-            dataInfo.postValue(listOf())
-            return null
-        }
+        if(response.isSuccessful) dataInfo.postValue(response.body()!!.items)
+        else dataInfo.postValue(listOf())
     }
 
 }

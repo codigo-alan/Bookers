@@ -6,11 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.bookers.databinding.FragmentDetailBinding
 import com.example.bookers.viewModel.BookersViewModel
-import com.squareup.picasso.Picasso
 
 
 class DetailFragment : Fragment() {
@@ -32,6 +29,11 @@ class DetailFragment : Fragment() {
         model.setFragment("detailFragment")
         binding.bookTitleTv.text = model.selectedBook.value!!.volumeInfo.title
         binding.bookDescriptionTv.text = model.selectedBook.value!!.volumeInfo.description
+        val listOfCategories = model.selectedBook.value!!.volumeInfo.categories
+        val listAuthors = model.selectedBook.value!!.volumeInfo.authors
+        binding.authorsTv?.text = fillAuthors(listAuthors)
+        binding.categoriesTv!!.text = fillCategories(listOfCategories)
+
         //val link: String = model.selectedBook.value!!.volumeInfo.imageLinks.smallThumbnail
         /*Glide.with(this)
             .load(model.selectedBook.value!!.volumeInfo.imageLinks.thumbnail)
@@ -44,6 +46,22 @@ class DetailFragment : Fragment() {
             .resize(50, 50)
             .centerCrop()
             .into(binding.bookImageIv)*/
+    }
+
+    private fun fillCategories(listOfCategories: List<String>?): String {
+        var categoriesString = ""
+        listOfCategories?.forEach {
+            categoriesString += it
+        }
+        return categoriesString
+    }
+
+    private fun fillAuthors(listAuthors: List<String>?): String {
+        var authorsString = ""
+        listAuthors?.forEach {
+            authorsString += it
+        }
+        return authorsString
     }
 
 }

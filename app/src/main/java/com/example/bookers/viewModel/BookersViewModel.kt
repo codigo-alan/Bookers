@@ -23,8 +23,7 @@ class BookersViewModel : ViewModel() {
     fun fetchData(url: String){
 
         viewModelScope.launch {
-            val dates = withContext(Dispatchers.IO) { repository.fetchData(url) }
-            //data.postValue(dates!!.items) //TODO view null case
+            withContext(Dispatchers.IO) { repository.fetchData(url) }
             data.postValue(repository.dataInfo.value)
         }
 

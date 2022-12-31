@@ -1,5 +1,6 @@
 package com.example.bookers.models
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -49,6 +50,7 @@ class BookAdapter(private var books: List<Item>, private val listener: OnClickLi
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun verifyFavorite(book: Item, binding: ItemBookBinding) {
         if (book.isFavorite) binding.ivHeart.setImageResource(R.drawable.ic_favorite_item_24)
         else binding.ivHeart.setImageResource(R.drawable.ic_favorite_border_24)
@@ -60,6 +62,7 @@ class BookAdapter(private var books: List<Item>, private val listener: OnClickLi
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setBooks(newListBooks: List<Item>) {
         books = newListBooks
         notifyDataSetChanged() //it`s like a refresh
