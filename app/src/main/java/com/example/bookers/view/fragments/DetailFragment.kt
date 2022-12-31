@@ -32,18 +32,18 @@ class DetailFragment : Fragment() {
         model.setFragment("detailFragment")
         binding.bookTitleTv.text = model.selectedBook.value!!.volumeInfo.title
         binding.bookDescriptionTv.text = model.selectedBook.value!!.volumeInfo.description
-        val link = model.selectedBook.value!!.volumeInfo.imageLinks.smallThumbnail
+        //val link: String = model.selectedBook.value!!.volumeInfo.imageLinks.smallThumbnail
         /*Glide.with(this)
             .load(model.selectedBook.value!!.volumeInfo.imageLinks.thumbnail)
             .diskCacheStrategy(DiskCacheStrategy.ALL) //save in cache to avoid unneeded resources consume
             .centerCrop()
             .circleCrop()
             .into(binding.bookImageIv) //put the image in te image view*/
-        Picasso.get()
+        /*Picasso.get()
             .load(link)
             .resize(50, 50)
             .centerCrop()
-            .into(binding.bookImageIv)
+            .into(binding.bookImageIv)*/
     }
 
 }

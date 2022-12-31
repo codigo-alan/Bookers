@@ -59,6 +59,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener  {
                 else -> false
             }
         }
+
+        model.search.observe(this){
+            model.fetchData("volumes?q=" + model.search.value!!)
+        }
     }
 
     /*override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -70,7 +74,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener  {
 
 
     //Add fragment to activity
-    fun addFragment(fragmentToPlace: Fragment) {
+    private fun addFragment(fragmentToPlace: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragmentContainerView, fragmentToPlace)
             setReorderingAllowed(true)
@@ -81,7 +85,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener  {
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         model.setSearchString(query!!)
-        model.fetchData(model.search.value!!)
         Log.d("search", model.search.value!!)
         return false
     }
