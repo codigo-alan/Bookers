@@ -29,8 +29,8 @@ class DetailFragment : Fragment() {
         model.setFragment("detailFragment")
         binding.bookTitleTv.text = model.selectedBook.value!!.volumeInfo.title
         binding.bookDescriptionTv.text = model.selectedBook.value!!.volumeInfo.description
-        val listOfCategories = model.selectedBook.value!!.volumeInfo.categories
         val listAuthors = model.selectedBook.value!!.volumeInfo.authors
+        val listOfCategories = model.selectedBook.value!!.volumeInfo.categories
         binding.authorsTv?.text = fillAuthors(listAuthors)
         binding.categoriesTv!!.text = fillCategories(listOfCategories)
 

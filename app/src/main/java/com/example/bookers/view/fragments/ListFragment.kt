@@ -48,7 +48,7 @@ class ListFragment : Fragment(), OnClickListener {
         bookAdapter = BookAdapter(model.data.value!!, this) //first empty. Pass param list of books and listener
 
         //Filter bar
-        binding.etFilter!!.addTextChangedListener { userFilter ->
+        binding.etFilter.addTextChangedListener { userFilter ->
             val booksFiltered = model.data.value!!.filter { book ->
                 book.volumeInfo.title.lowercase().contains(userFilter.toString().lowercase()) }
             bookAdapter.setBooks(booksFiltered)

@@ -56,6 +56,12 @@ class BookAdapter(private var books: List<Item>, private val listener: OnClickLi
         else binding.ivHeart.setImageResource(R.drawable.ic_favorite_border_24)
         binding.ivHeart.setOnClickListener {
             book.isFavorite = !book.isFavorite
+            if (book.isFavorite){
+                //TODO add to room
+            }
+            else {
+                //TODO delete from room
+            }
             Log.d("fav","${book.isFavorite}")
             notifyDataSetChanged()
         }
