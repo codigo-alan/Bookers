@@ -1,4 +1,4 @@
-package com.example.bookers.models
+package com.example.bookers.adapters
 
 import com.example.bookers.models.gsonModels.Item
 

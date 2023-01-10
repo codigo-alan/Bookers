@@ -10,6 +10,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * Repository for API and make operations with database TODO
+ */
 class Repository {
 
     private val apiInterface = ApiInterface.create()
@@ -20,5 +23,6 @@ class Repository {
         if(response.isSuccessful) dataInfo.postValue(response.body()!!.items)
         else dataInfo.postValue(listOf())
     }
+
 
 }

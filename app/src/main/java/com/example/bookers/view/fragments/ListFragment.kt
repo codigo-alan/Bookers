@@ -1,26 +1,20 @@
 package com.example.bookers.view.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-
 
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookers.R
 import com.example.bookers.databinding.FragmentListBinding
-import com.example.bookers.models.BookAdapter
-import com.example.bookers.models.OnClickListener
+import com.example.bookers.adapters.BookAdapter
+import com.example.bookers.adapters.OnClickListener
 import com.example.bookers.models.gsonModels.Item
 import com.example.bookers.viewModel.BookersViewModel
 

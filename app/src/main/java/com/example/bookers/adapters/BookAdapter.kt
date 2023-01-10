@@ -1,4 +1,4 @@
-package com.example.bookers.models
+package com.example.bookers.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context

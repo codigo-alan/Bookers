@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookers.R
 import com.example.bookers.databinding.FragmentListFavouritesBinding
-import com.example.bookers.models.BookAdapter
-import com.example.bookers.models.OnClickListener
+import com.example.bookers.adapters.BookAdapter
+import com.example.bookers.adapters.OnClickListener
 import com.example.bookers.models.gsonModels.Item
 import com.example.bookers.viewModel.BookersViewModel
 
