@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.bookers.R
+import com.example.bookers.database.BookEntity
 import com.example.bookers.databinding.ItemBookBinding
+import com.example.bookers.models.Repository
 import com.example.bookers.models.gsonModels.Item
 
 
 class BookAdapter(private var books: List<Item>, private val listener: OnClickListener): RecyclerView.Adapter<BookAdapter.ViewHolder>() {
 
     private lateinit var context: Context
+    private val repository = Repository()
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val binding = ItemBookBinding.bind(view)
@@ -56,16 +59,25 @@ class BookAdapter(private var books: List<Item>, private val listener: OnClickLi
         else binding.ivHeart.setImageResource(R.drawable.ic_favorite_border_24)
         binding.ivHeart.setOnClickListener {
             book.isFavorite = !book.isFavorite
+            val bookEntity: BookEntity = bookToEntity(book)
             if (book.isFavorite){
                 //TODO add to room
+                repository.insertBookToDb(bookEntity)
             }
             else {
                 //TODO delete from room
+                repository.deleteBookFromDb(bookEntity)
             }
             Log.d("fav","${book.isFavorite}")
             notifyDataSetChanged()
         }
 
+    }
+
+    private fun bookToEntity(book: Item): BookEntity {
+        return BookEntity(
+            book.id,book.isFavorite,book.volumeInfo.title,book.volumeInfo.description
+        )
     }
 
     @SuppressLint("NotifyDataSetChanged")

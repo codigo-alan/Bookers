@@ -35,7 +35,13 @@ class ListFavouritesFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
         model.setFragment("listFavouritesFragment")
+        model.fetchDataFav()
         bookAdapter = BookAdapter(model.dataFav.value!!, this)
+
+        model.dataFav.observe(viewLifecycleOwner){
+            bookAdapter.setBooks(it) //at a change in data execute this line
+        }
+
         myLayoutManager = LinearLayoutManager(context)
         binding.recyclerListFavouritesBooks.apply {
             setHasFixedSize(true)
