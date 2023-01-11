@@ -19,7 +19,6 @@ import com.example.bookers.models.gsonModels.Item
 class BookAdapter(private var books: List<Item>, private val listener: OnClickListener): RecyclerView.Adapter<BookAdapter.ViewHolder>() {
 
     private lateinit var context: Context
-    private val repository = Repository()
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val binding = ItemBookBinding.bind(view)
@@ -41,7 +40,6 @@ class BookAdapter(private var books: List<Item>, private val listener: OnClickLi
         val book = books[position]
         with(holder){
             setListener(book)
-            verifyFavorite(book, binding)
             binding.bookTitleTv.text = book.volumeInfo.title
             //val image: String = book.volumeInfo.imageLinks.smallThumbnail ?: "not linked"
             Glide.with(context)
@@ -53,32 +51,7 @@ class BookAdapter(private var books: List<Item>, private val listener: OnClickLi
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun verifyFavorite(book: Item, binding: ItemBookBinding) {
-        if (book.isFavorite) binding.ivHeart.setImageResource(R.drawable.ic_favorite_item_24)
-        else binding.ivHeart.setImageResource(R.drawable.ic_favorite_border_24)
-        binding.ivHeart.setOnClickListener {
-            book.isFavorite = !book.isFavorite
-            val bookEntity: BookEntity = bookToEntity(book)
-            if (book.isFavorite){
-                //TODO add to room
-                repository.insertBookToDb(bookEntity)
-            }
-            else {
-                //TODO delete from room
-                repository.deleteBookFromDb(bookEntity)
-            }
-            Log.d("fav","${book.isFavorite}")
-            notifyDataSetChanged()
-        }
 
-    }
-
-    private fun bookToEntity(book: Item): BookEntity {
-        return BookEntity(
-            book.id,book.isFavorite,book.volumeInfo.title,book.volumeInfo.description
-        )
-    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setBooks(newListBooks: List<Item>) {

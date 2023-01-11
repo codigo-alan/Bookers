@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class BookersViewModel : ViewModel() {
-    private val repository = Repository()
+    val repository = Repository()
     private val caster = Caster()
     var search = MutableLiveData<String>()
     var data = MutableLiveData<List<Item>>().apply { value = listOf() }
