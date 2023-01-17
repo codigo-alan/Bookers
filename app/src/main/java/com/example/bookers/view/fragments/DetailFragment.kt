@@ -46,7 +46,7 @@ class DetailFragment : Fragment() {
         binding.authorsTv?.text = fillAuthors(listAuthors)
         binding.categoriesTv!!.text = fillCategories(listOfCategories)
 
-        isFavorite.observe(viewLifecycleOwner){
+        model.repository.countBookInDb.observe(viewLifecycleOwner){
             verifyFavorite(model.selectedBook.value!!, binding)
         }
         //Images not works for the type of the link of the API
@@ -65,27 +65,17 @@ class DetailFragment : Fragment() {
     }
 
     private fun verifyFavorite(book: Item, binding: FragmentDetailBinding) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val bookEntity: BookEntity = bookToEntity(book)
-            isFavorite.postValue(model.repository.isBookInDb(bookEntity.id))//TODO
-            Log.d("bookInDb","$isFavorite")
-            if (isFavorite.value == 1) binding.ivHeart?.setImageResource(R.drawable.ic_favorite_item_24)
-            else binding.ivHeart?.setImageResource(R.drawable.ic_favorite_border_24)
-            binding.ivHeart?.setOnClickListener {
-                if (isFavorite.value == 0){
-                    model.repository.insertBookToDb(bookEntity)
-                    println("NO ESTA EN DB")//TODO
-                }
-                else {
-                    model.repository.deleteBookFromDb(bookEntity)
-                    println("SI ESTA EN DB")//TODO
-                }
-
+        val bookEntity: BookEntity = bookToEntity(book)
+        model.repository.isBookInDb(bookEntity.id) //Call to Database
+        Log.d("bookInDb", "$isFavorite")
+        binding.checkBoxFav?.isChecked = model.repository.countBookInDb.value == 1
+        binding.checkBoxFav?.setOnClickListener {
+            if (model.repository.countBookInDb.value == 0) {
+                model.repository.insertBookToDb(bookEntity)
+            } else {
+                model.repository.deleteBookFromDb(bookEntity)
             }
         }
-
-
-
 
     }
 

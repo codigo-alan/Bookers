@@ -19,7 +19,7 @@ class Repository {
     private val apiInterface = ApiInterface.create()
     var dataInfo = MutableLiveData<List<Item>>()
     var dataInfoFav = MutableLiveData<List<BookEntity>>()
-    var bookById = MutableLiveData<BookEntity?>()
+    var countBookInDb = MutableLiveData<Int>().apply { value = 1 }
 
     suspend fun fetchData(url: String) {
         val response = apiInterface.getData(url)
@@ -49,9 +49,14 @@ class Repository {
             }
         }
     }
-    fun isBookInDb(idBook: String): Int {
+    fun isBookInDb(idBook: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            val countInDb = BookApplication.database.bookDao().getBookById(idBook)
+            withContext(Dispatchers.Main) {
+                countBookInDb.postValue(countInDb)
+            }
+        }
 
-        return BookApplication.database.bookDao().getBookById(idBook)
     }
 
 
