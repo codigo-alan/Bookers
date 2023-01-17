@@ -67,7 +67,7 @@ class DetailFragment : Fragment() {
     private fun verifyFavorite(book: Item, binding: FragmentDetailBinding) {
         CoroutineScope(Dispatchers.IO).launch {
             val bookEntity: BookEntity = bookToEntity(book)
-            isFavorite.postValue(model.repository.isBookInDb(bookEntity.id)) //TODO
+            isFavorite.postValue(model.repository.isBookInDb(bookEntity.id))
             Log.d("bookInDb","$isFavorite")
             if (isFavorite.value == 1) binding.ivHeart?.setImageResource(R.drawable.ic_favorite_item_24)
             else binding.ivHeart?.setImageResource(R.drawable.ic_favorite_border_24)
