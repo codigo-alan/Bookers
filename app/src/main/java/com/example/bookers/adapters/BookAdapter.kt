@@ -53,7 +53,6 @@ class BookAdapter(private var books: List<Item>, private val listener: OnClickLi
 
 
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setBooks(newListBooks: List<Item>) {
         books = newListBooks
         notifyDataSetChanged() //it`s like a refresh
