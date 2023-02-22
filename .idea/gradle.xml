@@ -10,8 +10,8 @@
         <option name="gradleJvm" value="11" />
         <option name="modules">
           <set>
-            <option value="/dades/Alan/M08/Bookers" />
-            <option value="/dades/Alan/M08/Bookers/app" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
       </GradleProjectSettings>

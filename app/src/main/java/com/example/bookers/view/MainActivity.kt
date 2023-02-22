@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener  {
         }
 
         model.search.observe(this){
-            model.fetchData("volumes?q=" + model.search.value!!)
+            model.fetchDataPrev("volumes?q=" + model.search.value!!)
         }
     }
 

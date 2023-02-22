@@ -10,12 +10,13 @@ import com.example.bookers.models.Repository
 import com.example.bookers.models.gsonModels.Item
 import com.example.bookers.models.gsonModels.VolumeInfo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class BookersViewModel : ViewModel() {
     val repository = Repository()
-    private val caster = Caster()
+    //private val caster = Caster()
     var search = MutableLiveData<String>()
     var data = MutableLiveData<List<Item>>().apply { value = listOf() }
     var dataFav = MutableLiveData<List<Item>>().apply { value = listOf() } //This will be got from Room db
@@ -23,17 +24,24 @@ class BookersViewModel : ViewModel() {
     init {
         search.value = "argentina"
         fetchDataFav()
-        fetchData("volumes?q=" + search.value!!)
+        fetchDataPrev("volumes?q=" + search.value!!)
+        //fetchData("volumes?q=" + search.value!!)
     }
 
-    fun fetchData(url: String){
-
+    fun fetchDataPrev(url: String) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) { repository.fetchData(url) }
-            data.postValue(repository.dataInfo.value)
+            data.postValue(fetchData(url))
+        }
+    }
+
+    suspend fun fetchData(url: String) : List<Item>{
+
+        val newData = viewModelScope.async {
+            repository.fetchData(url)
+            //data.postValue(repository.dataInfo.value)
         }
 
-
+        return newData.await()
     }
 
     fun fetchDataFav(){

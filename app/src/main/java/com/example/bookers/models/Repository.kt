@@ -21,10 +21,12 @@ class Repository {
     var dataInfoFav = MutableLiveData<List<BookEntity>>()
     var countBookInDb = MutableLiveData<Int>().apply { value = 1 }
 
-    suspend fun fetchData(url: String) {
+    suspend fun fetchData(url: String) : List<Item> {
+        val listItems : List<Item>
         val response = apiInterface.getData(url)
-        if(response.isSuccessful) dataInfo.postValue(response.body()!!.items)
-        else dataInfo.postValue(listOf())
+        listItems = if(response.isSuccessful) response.body()!!.items
+        else listOf()
+        return listItems
     }
 
     fun insertBookToDb(bookEntity: BookEntity){
